@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmLive Innovations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Google's TensorFlow.js for client-side image processing -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #388e3c;
+            --accent-color: #81c784;
+            --background-color: #f1f8e9;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-title {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-subtitle {
+            font-size: 1.2em;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-icon {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--accent-color);
+            border-radius: 10px;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* AI Assistant Styles - Improved for better visibility */
+    .ai-assistant-container {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+    }
+
+    .ai-assistant-button {
+        background-color: var(--primary-color);
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transition: all 0.3s;
+    }
+
+    .ai-assistant-button:hover {
+        background-color: var(--secondary-color);
+        transform: scale(1.1);
+    }
+
+    .ai-assistant-window {
+        position: absolute;
+        bottom: 80px;
+        right: 0;
+        width: 380px; /* Increased width */
+        height: 550px; /* Increased height */
+        max-height: 70vh;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        overflow: hidden;
+        display: none;
+        flex-direction: column;
+    }
+
+    .ai-assistant-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ai-assistant-title {
+        font-weight: bold;
+        font-size: 1.2em; /* Larger title */
+    }
+
+    .ai-assistant-close {
+        cursor: pointer;
+        font-size: 1.5em;
+    }
+
+    .ai-assistant-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .ai-assistant-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        min-height: 0;
+    }
+
+    .message {
+        margin-bottom: 15px;
+        display: flex;
+    }
+
+    .bot-message {
+        justify-content: flex-start;
+    }
+
+    .user-message {
+        justify-content: flex-end;
+    }
+
+    .message-content {
+        max-width: 85%; /* Wider messages */
+        padding: 12px 15px; /* More padding */
+        border-radius: 18px;
+        font-size: 1.05em; /* Slightly larger text */
+        line-height: 1.4;
+    }
+
+    .bot-message .message-content {
+        background-color: #f0f0f0;
+        border-bottom-left-radius: 5px;
+    }
+
+    .user-message .message-content {
+        background-color: var(--accent-color);
+        color: white;
+        border-bottom-right-radius: 5px;
+    }
+
+    /* Compact media controls */
+    .ai-media-controls {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 15px 10px;
+        gap: 10px;
+    }
+
+    .ai-media-button {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+        background-color: #f5f5f5;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.9em;
+    }
+
+    .ai-media-button:hover {
+        background-color: #e0e0e0;
+    }
+
+    .ai-media-button i {
+        margin-right: 6px;
+        font-size: 14px;
+    }
+
+    /* Input area */
+    .ai-assistant-input-container {
+        padding: 10px 15px 15px;
+        background: white;
+    }
+
+    .ai-assistant-input {
+        display: flex;
+        align-items: center;
+    }
+
+    .ai-assistant-input input {
+        flex: 1;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        outline: none;
+        font-size: 1em;
+    }
+
+    .ai-assistant-input button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+        margin-left: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .ai-assistant-input button:hover {
+        background-color: var(--secondary-color);
+    }
+
+    /* Image preview */
+    .ai-image-preview-container {
+        max-height: 200px;
+        overflow: hidden;
+        margin: 10px 0;
+        display: none;
+        text-align: center;
+    }
+
+    .ai-image-preview {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 10px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .ai-assistant-window {
+            width: 90vw;
+            right: 5vw;
+            max-height: 65vh;
+        }
+        
+        .message-content {
+            max-width: 80%;
+        }
+    }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="header-title">FarmLive Innovations</h1>
+            <p class="header-subtitle">Revolutionizing Agriculture with AI Technology</p>
+        </div>
+    </header>
+    
+    <nav>
+        <a href="#about"><i class="fas fa-seedling"></i> About</a>
+        <a href="#features"><i class="fas fa-robot"></i> Features</a>
+        <a href="#impact"><i class="fas fa-chart-line"></i> Impact</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+    <div class="container">
+        <div id="about" class="card">
+            <h2>Transforming Agriculture</h2>
+            <p>We combine cutting-edge AI technology with traditional farming wisdom to help farmers make better decisions, increase yields, and promote sustainable agriculture. Our solutions are designed specifically for small and marginal farmers, making advanced farming techniques accessible to all.</p>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number">10,000+</div>
+                    <div>Farmers Helped</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">30%</div>
+                    <div>Yield Increase</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div>Districts Covered</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="features" class="card">
+            <h2>Smart Farming Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-cloud-sun feature-icon"></i>
+                    <h3>Weather Intelligence</h3>
+                    <p>AI-powered weather predictions and crop-specific advisories</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-microscope feature-icon"></i>
+                    <h3>Soil Analysis</h3>
+                    <p>Real-time soil health monitoring and recommendations</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-bug feature-icon"></i>
+                    <h3>Pest Detection</h3>
+                    <p>Early warning system for pest and disease management</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-coins feature-icon"></i>
+                    <h3>Market Connect</h3>
+                    <p>Direct market linkages and price predictions</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="impact" class="card">
+            <h2>Our Impact</h2>
+            <p>Through our AI-driven solutions, we've helped farmers achieve:</p>
+            <ul>
+                <li>Reduced water consumption by 40%</li>
+                <li>Decreased chemical fertilizer usage by 35%</li>
+                <li>Increased crop yield by up to 30%</li>
+                <li>Better market prices through smart timing</li>
+            </ul>
+        </div>
+
+        <div id="contact" class="card">
+            <h2>Get in Touch</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>support@farmlive.ai</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+91 98765 43210</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Agricultural Innovation Center, Tech Park</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Updated AI Assistant HTML -->
+<div class="ai-assistant-container">
+    <div class="ai-assistant-button" id="aiAssistantButton">
+        <i class="fas fa-robot"></i>
+    </div>
+    <div class="ai-assistant-window" id="aiAssistantWindow">
+        <div class="ai-assistant-header">
+            <div class="ai-assistant-title">FarmLive AI Assistant</div>
+            <div class="ai-assistant-close" id="aiAssistantClose">&times;</div>
+        </div>
+        <div class="ai-assistant-content">
+            <div class="ai-assistant-messages" id="aiAssistantMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        Hello! I'm your farming assistant. How can I help you today? You can ask about crops, pests, weather, or upload a photo of a plant issue.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image preview area (hidden by default) -->
+            <div class="ai-image-preview-container" id="imagePreviewContainer">
+                <img id="imagePreview" class="ai-image-preview">
+            </div>
+            
+            <!-- Compact media controls -->
+            <div class="ai-media-controls">
+                <div class="ai-media-button" id="aiImageUpload">
+                    <i class="fas fa-camera"></i>
+                    <span>Upload Photo</span>
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                </div>
+                <div class="ai-media-button" id="voiceButton">
+                    <i class="fas fa-microphone"></i>
+                    <span>Voice Input</span>
+                </div>
+            </div>
+            
+            <!-- Input area -->
+            <div class="ai-assistant-input-container">
+                <div class="ai-assistant-input">
+                    <input type="text" id="aiUserInput" placeholder="Ask me anything about farming...">
+                    <button id="aiSendButton"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <footer>
+        <p>&copy; 2025 FarmLive Innovations | Empowering Farmers with AI</p>
+    </footer>
+
+    <script>
+        // AI Assistant functionality - Enhanced Version
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const aiButton = document.getElementById('aiAssistantButton');
+            const aiWindow = document.getElementById('aiAssistantWindow');
+            const aiClose = document.getElementById('aiAssistantClose');
+            const aiMessages = document.getElementById('aiAssistantMessages');
+            const aiUserInput = document.getElementById('aiUserInput');
+            const aiSendButton = document.getElementById('aiSendButton');
+            const aiImageUpload = document.getElementById('aiImageUpload');
+            const imageInput = document.getElementById('imageInput');
+            const imagePreview = document.getElementById('imagePreview');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            const voiceButton = document.getElementById('voiceButton');
+            const optionButtons = document.querySelectorAll('.ai-option-button');
+    
+            // State management
+            let isProcessing = false;
+            let recognition;
+            let model; // TensorFlow.js model
+    
+            // Initialize the assistant
+            initAssistant();
+    
+            function initAssistant() {
+                setupEventListeners();
+                loadAIModels();
+            }
+    
+            function setupEventListeners() {
+                // Window toggle
+                aiButton.addEventListener('click', toggleAssistantWindow);
+                aiClose.addEventListener('click', () => aiWindow.style.display = 'none');
+    
+                // Message handling
+                aiSendButton.addEventListener('click', handleSendMessage);
+                aiUserInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') handleSendMessage();
+                });
+    
+                // Quick options
+                optionButtons.forEach(button => {
+                    button.addEventListener('click', handleQuickOption);
+                });
+    
+                // Image upload
+                aiImageUpload.addEventListener('click', () => imageInput.click());
+                imageInput.addEventListener('change', handleImageUpload);
+    
+                // Voice recognition
+                try {
+                    setupVoiceRecognition();
+                } catch (e) {
+                    console.warn("Voice recognition not available", e);
+                    voiceButton.style.display = 'none';
+                }
+            }
+    
+            async function loadAIModels() {
+                console.log("Loading AI models...");
+                try {
+                    // Load TensorFlow.js model for client-side processing
+                    model = await mobilenet.load();
+                    console.log("Client-side model loaded");
+                    
+                    // Here you would also initialize Vertex AI client in a real implementation
+                    // initVertexAIClient();
+                } catch (e) {
+                    console.error("Error loading AI models", e);
+                    addMessage("Some features may be limited as our AI systems are initializing. Please try again shortly.", 'bot');
+                }
+            }
+    
+            function toggleAssistantWindow() {
+                aiWindow.style.display = aiWindow.style.display === 'flex' ? 'none' : 'flex';
+                if (aiWindow.style.display === 'flex') {
+                    aiUserInput.focus();
+                }
+            }
+    
+            async function handleSendMessage() {
+                if (isProcessing) return;
+                
+                const message = aiUserInput.value.trim();
+                if (!message) return;
+    
+                addMessage(message, 'user');
+                aiUserInput.value = '';
+                isProcessing = true;
+                
+                try {
+                    // Show typing indicator
+                    const typingIndicator = addTypingIndicator();
+                    
+                    // In production, this would call your Vertex AI endpoint
+                    const response = await simulateAIResponse(message);
+                    
+                    // Remove typing indicator and show response
+                    aiMessages.removeChild(typingIndicator);
+                    addMessage(response, 'bot');
+                } catch (error) {
+                    console.error("Error getting AI response:", error);
+                    addMessage("Sorry, I'm having trouble processing your request. Please try again.", 'bot');
+                } finally {
+                    isProcessing = false;
+                }
+            }
+    
+            function addTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message bot-message typing-indicator';
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                contentDiv.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
+                
+                typingDiv.appendChild(contentDiv);
+                aiMessages.appendChild(typingDiv);
+                aiMessages.scrollTop = aiMessages.scrollHeight;
+                
+                return typingDiv;
+            }
+    
+            async function simulateAIResponse(message) {
+                // This simulates API call delay
+                await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 700));
+                
+                // In a real implementation, this would call Vertex AI:
+                // return await callVertexAI(message);
+                
+                // Simulated responses based on message content
+                const lowerMessage = message.toLowerCase();
+                
+                if (lowerMessage.includes('rust') || lowerMessage.includes('fungus')) {
+                    return "Leaf rust can be treated with fungicides containing propiconazole or tebuconazole. Also ensure proper plant spacing for air circulation.";
+                } 
+                else if (lowerMessage.includes('soil') || lowerMessage.includes('crop')) {
+                    return "For optimal crop selection, I'll need to know your soil type. Clay soils work well for wheat or barley, while sandy soils are better for millet or peanuts.";
+                }
+                else if (lowerMessage.includes('weather') || lowerMessage.includes('rain')) {
+                    return "Our weather prediction system indicates a 60% chance of rain in the next 3 days. You might want to delay irrigation if rain is expected.";
+                }
+                else if (lowerMessage.includes('price') || lowerMessage.includes('market')) {
+                    return "Current market trends show wheat prices at ₹2,150 per quintal in your region, with a predicted 5% increase next month.";
+                }
+                else {
+                    const genericResponses = [
+                        "Based on my analysis, I recommend checking your soil pH levels as a first step.",
+                        "This appears to be a nutrient deficiency. Have you considered adding organic compost?",
+                        "Our pest database suggests this might be a common seasonal issue. Regular monitoring is advised.",
+                        "I'm checking the latest farming data for your region to give you the most accurate advice."
+                    ];
+                    return genericResponses[Math.floor(Math.random() * genericResponses.length)];
+                }
+            }
+    
+            function handleQuickOption(e) {
+                const question = e.currentTarget.getAttribute('data-question');
+                addMessage(question, 'user');
+                
+                // Simulate AI response after a short delay
+                setTimeout(() => {
+                    let response;
+                    switch(question) {
+                        case "How to treat leaf rust?":
+                            response = "For leaf rust: 1) Remove infected leaves 2) Apply copper-based fungicide 3) Improve air circulation 4) Avoid overhead watering";
+                            break;
+                        case "Best crops for my soil":
+                            response = "Could you specify your soil type? For general advice: Clay - wheat/barley; Sandy - millet/peanuts; Loamy - most crops do well";
+                            break;
+                        case "Weather forecast":
+                            response = "For accurate weather info, please enable location access or specify your area. Our system provides 5-day forecasts.";
+                            break;
+                        case "Market prices for wheat":
+                            response = "Current wheat prices (per quintal):\n- Local market: ₹2,150\n- Regional average: ₹2,230\nPredicted to rise 5% in coming weeks";
+                            break;
+                        default:
+                            response = "Let me analyze that for you...";
+                    }
+                    addMessage(response, 'bot');
+                }, 600);
+            }
+    
+            async function handleImageUpload(e) {
+                if (!e.target.files.length) return;
+                
+                const file = e.target.files[0];
+                if (!file.type.match('image.*')) {
+                    addMessage("Please upload an image file (JPEG, PNG)", 'bot');
+                    return;
+                }
+    
+                const reader = new FileReader();
+                
+                reader.onload = async function(event) {
+                    // Display the image
+                    imagePreview.src = event.target.result;
+                    imagePreviewContainer.style.display = 'block';
+                    imagePreviewContainer.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Show analysis message
+                    addMessage("Analyzing the plant image...", 'bot');
+                    
+                    try {
+                        // In a real app, this would call Vertex AI Vision
+                        // const analysis = await analyzePlantImage(imagePreview.src);
+                        
+                        // Simulate analysis delay
+                        await new Promise(resolve => setTimeout(resolve, 2000));
+                        
+                        // Simulated analysis results
+                        const diagnoses = [
+                            {
+                                issue: "Early Blight",
+                                confidence: "85%",
+                                solution: "Remove affected leaves, apply copper fungicide, improve air circulation"
+                            },
+                            {
+                                issue: "Nitrogen Deficiency",
+                                confidence: "78%",
+                                solution: "Apply organic fertilizer, consider crop rotation"
+                            },
+                            {
+                                issue: "Healthy Plant",
+                                confidence: "92%",
+                                solution: "No treatment needed, maintain current care regimen"
+                            },
+                            {
+                                issue: "Spider Mite Infestation",
+                                confidence: "80%",
+                                solution: "Apply neem oil, increase humidity, remove heavily infested leaves"
+                            }
+                        ];
+                        
+                        const diagnosis = diagnoses[Math.floor(Math.random() * diagnoses.length)];
+                        const response = `Analysis complete:\n\nIssue: ${diagnosis.issue} (${diagnosis.confidence} confidence)\nRecommended action: ${diagnosis.solution}`;
+                        
+                        addMessage(response, 'bot');
+                        
+                        // In a real implementation, you would:
+                        // 1. Process the image with TensorFlow.js if needed
+                        // 2. Send to Vertex AI for analysis
+                        // 3. Format and display the real response
+                        
+                    } catch (error) {
+                        console.error("Image analysis error:", error);
+                        addMessage("Sorry, I couldn't analyze the image. Please try again with a clearer photo.", 'bot');
+                    }
+                };
+                
+                reader.readAsDataURL(file);
+            }
+    
+            function setupVoiceRecognition() {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+                
+                recognition.onstart = () => {
+                    voiceButton.classList.add('listening');
+                    addMessage("Listening... Speak now.", 'bot');
+                };
+                
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    aiUserInput.value = transcript;
+                    voiceButton.classList.remove('listening');
+                };
+                
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error', event.error);
+                    voiceButton.classList.remove('listening');
+                    addMessage(`Voice input failed: ${event.error}. Please try typing instead.`, 'bot');
+                };
+                
+                recognition.onend = () => {
+                    if (voiceButton.classList.contains('listening')) {
+                        voiceButton.classList.remove('listening');
+                    }
+                };
+                
+                voiceButton.addEventListener('click', toggleVoiceRecognition);
+            }
+    
+            function toggleVoiceRecognition() {
+                if (voiceButton.classList.contains('listening')) {
+                    recognition.stop();
+                } else {
+                    try {
+                        recognition.start();
+                    } catch (e) {
+                        console.error("Voice recognition error:", e);
+                        addMessage("Voice input isn't working right now. Please type your question.", 'bot');
+                    }
+                }
+            }
+    
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+                
+                // Preserve line breaks in the message
+                const formattedText = text.replace(/\n/g, '<br>');
+                contentDiv.innerHTML = formattedText;
+                
+                messageDiv.appendChild(contentDiv);
+                aiMessages.appendChild(messageDiv);
+                
+                // Scroll to bottom with smooth behavior
+                aiMessages.scrollTo({
+                    top: aiMessages.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    
+        // Vertex AI Integration (example structure)
+        async function callVertexAI(prompt) {
+            // In a real implementation:
+            /*
+            const { PredictionServiceClient } = require('@google-cloud/aiplatform');
+            const client = new PredictionServiceClient();
+            
+            const endpoint = `projects/${projectId}/locations/${location}/endpoints/${endpointId}`;
+            
+            const request = {
+                endpoint,
+                instances: [
+                    {
+                        content: prompt,
+                        mimeType: 'text/plain'
+                    }
+                ],
+            };
+            
+            try {
+                const [response] = await client.predict(request);
+                return response.predictions[0].content;
+            } catch (error) {
+                console.error("Vertex AI Error:", error);
+                throw error;
+            }
+            */
+            
+            // Simulated response for demo
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    const responses = [
+                        "Vertex AI analysis suggests your crops need more nitrogen.",
+                        "The model predicts optimal harvest time in 2 weeks.",
+                        "Soil moisture levels appear adequate according to our AI.",
+                        "Market trends analyzed: prices expected to rise soon."
+                    ];
+                    resolve(responses[Math.floor(Math.random() * responses.length)]);
+                }, 1200);
+            });
+        }
+    
+        async function analyzePlantImage(imageData) {
+            // In a real implementation:
+            /*
+            const { PredictionServiceClient } = require('@google-cloud/aiplatform');
+            const client = new PredictionServiceClient();
+            
+            const endpoint = `projects/${projectId}/locations/${location}/endpoints/${endpointId}`;
+            
+            const request = {
+                endpoint,
+                instances: [
+                    {
+                        content: imageData,
+                        mimeType: 'image/jpeg'
+                    }
+                ],
+            };
+            
+            const [response] = await client.predict(request);
+            return formatPlantDiagnosis(response.predictions[0]);
+            */
+            
+            // Simulated response for demo
+            return {
+                issue: "Simulated Plant Issue",
+                confidence: "85%",
+                solution: "This is a simulated response. In production, Vertex AI would provide real analysis."
+            };
+        }
+    </script>
+</body>
+</html>
