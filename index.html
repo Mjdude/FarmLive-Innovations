@@ -10,14 +10,14 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
     <style>
         :root {
-            --primary-color: #2e7d32;
-            --secondary-color: #388e3c;
-            --accent-color: #81c784;
-            --background-color: #f1f8e9;
+            --primary-color: #2e7d32; /* Dark green */
+            --secondary-color: #388e3c; /* Medium green */
+            --accent-color: #81c784; /* Light green */
+            --background-color: #f1f8e9; /* Light beige */
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Georgia', serif; /* Rustic font */
             margin: 0;
             padding: 0;
             background-color: var(--background-color);
@@ -359,6 +359,37 @@
         }
     }
         
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input, .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+
+    .submit-button {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .submit-button:hover {
+        background-color: var(--secondary-color);
+    }
     </style>
 </head>
 <body>
@@ -374,6 +405,7 @@
         <a href="#features"><i class="fas fa-robot"></i> Features</a>
         <a href="#impact"><i class="fas fa-chart-line"></i> Impact</a>
         <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="#ngo-connect"><i class="fas fa-handshake"></i> NGO Connect</a>
     </nav>
 
     <div class="container">
@@ -450,6 +482,54 @@
                     <p>Agricultural Innovation Center, Tech Park</p>
                 </div>
             </div>
+        </div>
+
+        <div id="ngo-connect" class="card">
+            <h2>Connect with Farmers</h2>
+            <p>We invite NGOs to partner with us in supporting farmers. Your contributions can help improve agricultural practices and sustainability. Please fill out the form below to express your interest in funding or collaborating with farmers.</p>
+            <form id="ngoForm">
+                <div class="form-group">
+                    <label for="ngoName">NGO Name:</label>
+                    <input type="text" id="ngoName" name="ngoName" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactPerson">Contact Person:</label>
+                    <input type="text" id="contactPerson" name="contactPerson" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+
+        <div id="health-tracking" class="card">
+            <h2>Health Tracking Dashboard</h2>
+            <p>Track your health metrics and get personalized insights to support your well-being.</p>
+            <form id="healthForm">
+                <div class="form-group">
+                    <label for="menstrualCycle">Menstrual Cycle Start Date:</label>
+                    <input type="date" id="menstrualCycle" name="menstrualCycle" required>
+                </div>
+                <div class="form-group">
+                    <label for="physicalActivity">Physical Activity (minutes):</label>
+                    <input type="number" id="physicalActivity" name="physicalActivity" required>
+                </div>
+                <div class="form-group">
+                    <label for="dietaryHabits">Dietary Habits:</label>
+                    <textarea id="dietaryHabits" name="dietaryHabits" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Log Health Data</button>
+            </form>
         </div>
     </div>
 
@@ -898,6 +978,57 @@
                 solution: "This is a simulated response. In production, Vertex AI would provide real analysis."
             };
         }
+
+        // Function to fetch health tips from Gemini API
+        async function fetchHealthTips(data) {
+            try {
+                const response = await fetch('/api/health-tips', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const tips = await response.json();
+                displayHealthTips(tips);
+            } catch (error) {
+                console.error('Error fetching health tips:', error);
+                alert('Failed to fetch health tips. Please try again later.');
+            }
+        }
+
+        // Function to display health tips
+        function displayHealthTips(tips) {
+            const tipsContainer = document.createElement('div');
+            tipsContainer.className = 'tips-container';
+            tipsContainer.innerHTML = '<h3>Health Tips</h3>';
+
+            tips.forEach(tip => {
+                const tipElement = document.createElement('p');
+                tipElement.textContent = tip;
+                tipsContainer.appendChild(tipElement);
+            });
+
+            document.getElementById('health-tracking').appendChild(tipsContainer);
+        }
+
+        // Event listener for form submission
+        document.getElementById('healthForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const data = {
+                menstrualCycle: document.getElementById('menstrualCycle').value,
+                physicalActivity: document.getElementById('physicalActivity').value,
+                dietaryHabits: document.getElementById('dietaryHabits').value
+            };
+
+            fetchHealthTips(data);
+        });
     </script>
 </body>
 </html>
