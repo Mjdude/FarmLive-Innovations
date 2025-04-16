@@ -1,0 +1,208 @@
+/* Utility Controls - Main Container */
+.utility-controls {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 9999;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Left and Right Control Groups */
+.left-controls,
+.right-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 8px 12px;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px);
+}
+
+/* Basic Control Button Styling */
+.control-button {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid #4a7c59;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  position: relative;
+}
+
+.control-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  background-color: #f0f7e6;
+}
+
+.control-button i {
+  font-size: 22px;
+  color: #4a7c59;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+/* Language Control Specific */
+.language-control-wrapper {
+  position: relative;
+}
+
+.language-dropdown {
+  position: absolute;
+  top: 55px;
+  left: 0;
+  width: 180px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+.language-dropdown-header {
+  padding: 12px 15px;
+  background-color: #f5f5f5;
+  color: #4a7c59;
+  font-weight: 600;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.language-options {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.language-option {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #333;
+}
+
+.language-option:hover {
+  background-color: #f5f5f5;
+}
+
+.language-option.active {
+  background-color: rgba(74, 124, 89, 0.1);
+  color: #4a7c59;
+  font-weight: 500;
+}
+
+/* Notification Badge */
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff5252;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  border: 2px solid white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+  }
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
+}
+
+/* Map Control Specific */
+.map-tooltip {
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.control-button:hover .map-tooltip {
+  opacity: 1;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bellShake {
+  0%, 100% {
+    transform: rotate(0);
+  }
+  20%, 60% {
+    transform: rotate(8deg);
+  }
+  40%, 80% {
+    transform: rotate(-8deg);
+  }
+}
+
+.bell-shake {
+  animation: bellShake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .utility-controls {
+    top: 10px;
+    padding: 0 10px;
+  }
+  
+  .control-button {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .control-button i {
+    font-size: 18px;
+  }
+  
+  .left-controls,
+  .right-controls {
+    gap: 10px;
+  }
+}

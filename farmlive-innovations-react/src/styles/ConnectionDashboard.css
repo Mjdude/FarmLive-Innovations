@@ -1,0 +1,642 @@
+/* Connection Dashboard Styles */
+:root {
+  --connection-primary: #4a7c59;
+  --connection-secondary: #f9a825;
+  --connection-accent: #2e7d32;
+  --connection-light: #f5f5f5;
+  --connection-dark: #2c3e50;
+  --connection-completed: #4caf50;
+  --connection-in-progress: #2196f3;
+  --connection-pending: #ff9800;
+  --connection-border-radius: 8px;
+  --connection-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.connection-dashboard {
+  padding: 40px 0;
+  background-color: var(--connection-light);
+  min-height: 100vh;
+}
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.dashboard-title {
+  color: var(--connection-primary);
+}
+
+.dashboard-title h2 {
+  font-size: 32px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-title h2 i {
+  color: var(--connection-secondary);
+}
+
+.dashboard-title p {
+  margin: 8px 0 0;
+  color: #666;
+  font-size: 16px;
+}
+
+.dashboard-search {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: var(--connection-border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px 15px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.dashboard-search input {
+  flex: 1;
+  border: none;
+  padding: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.dashboard-search button {
+  background: none;
+  border: none;
+  color: var(--connection-primary);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 8px;
+}
+
+.dashboard-search button:hover {
+  color: var(--connection-secondary);
+}
+
+.dashboard-filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.dashboard-filter {
+  background-color: white;
+  border-radius: var(--connection-border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-filter label {
+  font-weight: 500;
+  color: #555;
+}
+
+.dashboard-filter select {
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.dashboard-content {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.connections-list {
+  flex: 1;
+  min-width: 300px;
+}
+
+.connections-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.connections-header h3 {
+  margin: 0;
+  color: var(--connection-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.connections-header h3 i {
+  color: var(--connection-primary);
+}
+
+.view-options {
+  display: flex;
+  gap: 10px;
+}
+
+.view-option {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+
+.view-option.active {
+  color: var(--connection-primary);
+}
+
+.connection-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.connection-card {
+  background-color: white;
+  border-radius: var(--connection-border-radius);
+  box-shadow: var(--connection-box-shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.connection-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.connection-image {
+  height: 150px;
+  overflow: hidden;
+  position: relative;
+}
+
+.connection-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.connection-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-completed {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: var(--connection-completed);
+}
+
+.status-in-progress {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: var(--connection-in-progress);
+}
+
+.status-pending {
+  background-color: rgba(255, 152, 0, 0.2);
+  color: var(--connection-pending);
+}
+
+.connection-details {
+  padding: 15px;
+}
+
+.connection-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.connection-title h4 {
+  margin: 0;
+  color: var(--connection-dark);
+  font-size: 18px;
+}
+
+.connection-date {
+  font-size: 14px;
+  color: #777;
+}
+
+.connection-participants {
+  margin-bottom: 10px;
+}
+
+.participant {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.participant i {
+  color: var(--connection-primary);
+  font-size: 14px;
+}
+
+.participant-name {
+  font-weight: 500;
+  color: #444;
+}
+
+.participant-type {
+  font-size: 13px;
+  color: #777;
+}
+
+.connection-crop {
+  margin-bottom: 10px;
+}
+
+.crop-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.crop-type {
+  color: #444;
+  font-weight: 500;
+}
+
+.crop-price {
+  color: var(--connection-secondary);
+  font-weight: 600;
+}
+
+.connection-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.connection-tag {
+  background-color: var(--connection-light);
+  color: #666;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.connection-actions {
+  padding: 10px 15px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.connection-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rating-stars {
+  color: var(--connection-secondary);
+  font-size: 14px;
+}
+
+.rating-value {
+  font-weight: 600;
+  color: #444;
+}
+
+.connection-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.connection-button {
+  background: none;
+  border: none;
+  color: var(--connection-primary);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.connection-button:hover {
+  color: var(--connection-secondary);
+}
+
+/* List View Styles */
+.connections-list-view .connection-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.connections-list-view .connection-card {
+  display: flex;
+  height: 120px;
+}
+
+.connections-list-view .connection-image {
+  width: 120px;
+  height: 120px;
+}
+
+.connections-list-view .connection-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.connections-list-view .connection-title {
+  margin-bottom: 5px;
+}
+
+.connections-list-view .connection-participants {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 5px;
+}
+
+.connections-list-view .connection-crop {
+  margin-bottom: 5px;
+}
+
+.connections-list-view .connection-tags {
+  margin-top: 5px;
+}
+
+.connections-list-view .connection-actions {
+  margin-top: auto;
+  padding: 5px 0 0;
+  border-top: 1px solid #eee;
+}
+
+/* Opportunities Panel */
+.opportunities-panel {
+  width: 350px;
+  background-color: white;
+  border-radius: var(--connection-border-radius);
+  box-shadow: var(--connection-box-shadow);
+  overflow: hidden;
+}
+
+.opportunities-header {
+  background-color: var(--connection-primary);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.opportunities-header h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.opportunities-count {
+  background-color: var(--connection-secondary);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opportunities-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.opportunity-item {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  position: relative;
+}
+
+.opportunity-item:last-child {
+  border-bottom: none;
+}
+
+.opportunity-new-badge {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background-color: var(--connection-secondary);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.opportunity-title {
+  margin: 0 0 10px;
+  color: var(--connection-dark);
+  font-size: 16px;
+  padding-right: 50px;
+}
+
+.opportunity-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.opportunity-detail {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
+.opportunity-detail i {
+  color: var(--connection-primary);
+  font-size: 14px;
+}
+
+.opportunity-detail-label {
+  font-weight: 500;
+  color: #555;
+}
+
+.opportunity-detail-value {
+  color: #444;
+}
+
+.opportunity-deadline {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: var(--connection-pending);
+  margin-bottom: 10px;
+}
+
+.opportunity-deadline i {
+  font-size: 14px;
+}
+
+.opportunity-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.opportunity-button {
+  background-color: var(--connection-primary);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.opportunity-button:hover {
+  background-color: var(--connection-accent);
+}
+
+.opportunity-save {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.opportunity-save:hover {
+  color: var(--connection-primary);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1100px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+  
+  .opportunities-panel {
+    width: 100%;
+  }
+  
+  .opportunities-list {
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .dashboard-search {
+    max-width: 100%;
+  }
+  
+  .connection-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+/* Seasonal Theme Variations */
+.spring .connection-dashboard {
+  background-color: #f0f7e6;
+}
+
+.summer .connection-dashboard {
+  background-color: #f5f9e8;
+}
+
+.autumn .connection-dashboard {
+  background-color: #f9f5e8;
+}
+
+.winter .connection-dashboard {
+  background-color: #f5f5f8;
+}
+
+/* High Contrast Mode */
+.high-contrast-mode .connection-dashboard {
+  background-color: #000;
+  color: #fff;
+}
+
+.high-contrast-mode .dashboard-title h2,
+.high-contrast-mode .dashboard-title p {
+  color: #fff;
+}
+
+.high-contrast-mode .connection-card,
+.high-contrast-mode .opportunities-panel,
+.high-contrast-mode .dashboard-search,
+.high-contrast-mode .dashboard-filter {
+  background-color: #222;
+  border: 1px solid #444;
+}
+
+.high-contrast-mode .connection-title h4,
+.high-contrast-mode .participant-name,
+.high-contrast-mode .crop-type,
+.high-contrast-mode .rating-value,
+.high-contrast-mode .opportunity-title,
+.high-contrast-mode .opportunity-detail-value {
+  color: #fff;
+}
+
+.high-contrast-mode .connection-date,
+.high-contrast-mode .participant-type,
+.high-contrast-mode .connection-tag,
+.high-contrast-mode .dashboard-filter label {
+  color: #ccc;
+}
+
+.high-contrast-mode .connection-button,
+.high-contrast-mode .view-option {
+  color: #fff;
+}
+
+.high-contrast-mode .connection-button:hover,
+.high-contrast-mode .view-option:hover,
+.high-contrast-mode .view-option.active {
+  color: var(--connection-secondary);
+}

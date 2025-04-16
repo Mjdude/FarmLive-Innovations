@@ -1,0 +1,33 @@
+.utility-controls {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 13000;
+}
+
+.flourishing-fields-theme .utility-controls {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 5px 10px;
+  border-radius: 30px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+@media (max-width: 768px) {
+  .utility-controls {
+    top: 10px;
+    right: 10px;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .utility-controls {
+    right: 10px;
+    top: 10px;
+    gap: 8px;
+  }
+}

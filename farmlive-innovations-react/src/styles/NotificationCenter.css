@@ -1,0 +1,1070 @@
+/* Notification Center Styling - Designed to match the Flourishing Fields theme */
+
+.notification-center-container {
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Bell icon and badge */
+.notification-bell-container {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-bell {
+  background: var(--ff-fresh-green, #4a7c59);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.notification-bell:hover {
+  transform: scale(1.05);
+  background: var(--ff-deep-green, #2e5d3b);
+}
+
+.notification-bell.active {
+  background: var(--ff-harvest-gold, #e6b012);
+}
+
+.notification-bell i {
+  font-size: 18px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Notification Panel - Improved for readability */
+.notification-panel {
+  position: fixed;
+  top: 70px;
+  right: 30px;
+  width: 450px; /* Increased width */
+  max-height: 80vh;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+  z-index: 12000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideDown 0.3s ease-out;
+  border: 2px solid var(--ff-fresh-green, #4a7c59);
+}
+
+/* Panel Header */
+.notification-header {
+  background-color: var(--ff-fresh-green, #4a7c59);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--ff-straw, #e8c99b);
+}
+
+.notification-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.mark-all-read {
+  background: transparent;
+  border: none;
+  color: var(--ff-deep-green, #2e5d3b);
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+  padding: 5px;
+}
+
+.mark-all-read:hover {
+  color: var(--ff-fresh-green, #4a7c59);
+}
+
+/* Eligibility Status Panel */
+.eligibility-status-panel {
+  padding: 15px;
+  background-color: rgba(245, 222, 179, 0.3);
+  border-bottom: 1px solid var(--ff-straw, #e8c99b);
+}
+
+.eligibility-status-panel h4 {
+  margin: 0 0 10px 0;
+  color: var(--ff-soil-brown, #5a4634);
+  font-size: 16px;
+}
+
+.eligibility-stats {
+  display: flex;
+  justify-content: space-between;
+}
+
+.eligibility-stat {
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+  flex: 1;
+  margin: 0 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.eligibility-stat.eligible {
+  background-color: rgba(46, 204, 113, 0.2);
+  border: 1px solid rgba(46, 204, 113, 0.5);
+}
+
+.eligibility-stat.potentially {
+  background-color: rgba(241, 196, 15, 0.2);
+  border: 1px solid rgba(241, 196, 15, 0.5);
+}
+
+.eligibility-stat.not-eligible {
+  background-color: rgba(231, 76, 60, 0.2);
+  border: 1px solid rgba(231, 76, 60, 0.5);
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.eligibility-stat.eligible .stat-number {
+  color: #27ae60;
+}
+
+.eligibility-stat.potentially .stat-number {
+  color: #f39c12;
+}
+
+.eligibility-stat.not-eligible .stat-number {
+  color: #c0392b;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--ff-text-dark, #2c2416);
+}
+
+/* Filter options */
+.notification-filters {
+  display: flex;
+  gap: 18px;
+  margin: 18px 0 24px 0;
+  padding: 0 8px;
+  flex-wrap: wrap;
+  padding: 15px;
+  border-bottom: 1px solid var(--ff-straw, #e8c99b);
+  background-color: white;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: var(--ff-soil-brown, #5a4634);
+  font-size: 14px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-select {
+  flex: 1;
+  min-width: 100px;
+}
+
+.filter-select label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: var(--ff-text-dark, #2c2416);
+}
+
+.filter-select select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--ff-clay, #9c7c65);
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+  color: var(--ff-text-dark, #2c2416);
+}
+
+/* Notification List - Improved scrolling */
+.notification-list {
+  overflow-y: auto;
+  max-height: calc(80vh - 180px);
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ff-fresh-green, #4a7c59) #f0f0f0;
+  overscroll-behavior: contain;
+}
+
+/* Scrollbar styling for WebKit browsers */
+.notification-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.notification-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.notification-list::-webkit-scrollbar-thumb {
+  background-color: var(--ff-fresh-green, #4a7c59);
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
+}
+
+.notification-list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--ff-deep-green, #2e5d3b);
+}
+
+/* Notification Item - Completely redesigned for clarity */
+.notification-item {
+  padding: 20px;
+  margin: 10px;
+  border-radius: 8px;
+  position: relative;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.notification-item.unread {
+  background-color: #f0f7e6;
+  border-left: 5px solid var(--ff-fresh-green, #4a7c59);
+}
+
+.notification-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Category Title - More visible and sticky */
+.category-title {
+  padding: 15px;
+  margin: 0;
+  background-color: #f0f7e6;
+  color: #2e5d3b;
+  font-size: 16px;
+  font-weight: 700;
+  border-bottom: 2px solid #c8e6c9;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  text-align: center;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Notification Content */
+.notification-content {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.notification-icon {
+  background-color: var(--ff-fresh-green, #4a7c59);
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.notification-icon i {
+  font-size: 18px;
+}
+
+.notification-text {
+  flex-grow: 1;
+}
+
+/* Scheme Title - Much larger and more prominent */
+.notification-title {
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0 0 10px 0;
+  color: #333;
+  line-height: 1.3;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Scheme Type Badge - Extremely visible but not covering content */
+.scheme-type-badge {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 8px 0;
+  background-color: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #bbdefb;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scheme-type-badge i {
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+/* Crop Insurance Badge - Fixed size to prevent overlapping */
+.scheme-type-badge.crop-insurance {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  font-weight: 600;
+  padding: 8px 12px;
+  font-size: 15px;
+  letter-spacing: normal;
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.scheme-type-badge.crop-insurance i {
+  font-size: 16px;
+  margin-right: 6px;
+}
+
+/* Remove animation that might cause layout issues */
+.scheme-type-badge.crop-insurance::before {
+  display: none;
+}
+
+/* Scheme Description - Much more readable */
+.notification-description {
+  font-size: 16px;
+  color: #333;
+  margin: 0 0 15px 0;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 3px solid #ddd;
+}
+
+/* Eligibility Badge - More prominent */
+.eligibility-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px 0;
+  width: fit-content;
+}
+
+.eligibility-badge i {
+  font-size: 18px;
+}
+
+.eligibility-badge.eligible {
+  background-color: #d4edda;
+  color: #155724;
+  border: 2px solid #c3e6cb;
+}
+
+.eligibility-badge.potentially {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 2px solid #ffeeba;
+}
+
+.eligibility-badge.noteligible {
+  background-color: #ffebee;
+  color: #721c24;
+  border: 2px solid #ffcdd2;
+}
+
+/* Expiry Countdown - More visible */
+.expiry-countdown {
+  font-size: 16px;
+  color: #e74c3c;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffebee;
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: 2px solid #ffcdd2;
+  font-weight: 600;
+}
+
+.expiry-countdown i {
+  color: #d32f2f;
+  font-size: 18px;
+}
+
+/* Action Buttons - Larger and more prominent */
+.notification-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.view-details-button, 
+.apply-button {
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-details-button i,
+.apply-button i {
+  font-size: 18px;
+}
+
+.view-details-button {
+  background-color: white;
+  border: 2px solid var(--ff-fresh-green, #4a7c59);
+  color: var(--ff-fresh-green, #4a7c59);
+  flex: 1;
+}
+
+.view-details-button:hover {
+  background-color: #f0f7e6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.apply-button {
+  background-color: var(--ff-fresh-green, #4a7c59);
+  border: 2px solid var(--ff-fresh-green, #4a7c59);
+  color: white;
+  flex: 1;
+}
+
+.apply-button:hover {
+  background-color: var(--ff-deep-green, #2e5d3b);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  top: 80px;
+  right: 30px;
+  z-index: 14000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 350px;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .toast-container {
+    top: 60px;
+    right: 10px;
+    max-width: 95vw;
+  }
+}
+
+.notification-toast {
+  margin-top: 90px;
+  min-width: 320px;
+  max-width: 420px;
+  padding: 18px 24px;
+  font-size: 1.08em;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.13);
+  z-index: 13000;
+}
+@media (max-width: 600px) {
+  .notification-toast {
+    margin-top: 130px;
+    left: 2vw;
+    right: 2vw;
+    min-width: 0;
+    width: 95vw;
+  }
+}
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  border-left: 5px solid #3498db;
+
+
+.notification-toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification-toast.priority-high {
+  border-left-color: #e74c3c;
+}
+
+.notification-toast.priority-medium {
+  border-left-color: #f39c12;
+}
+
+.notification-toast.priority-low {
+  border-left-color: #3498db;
+}
+
+.toast-content {
+  display: flex;
+  padding: 15px;
+  align-items: center;
+}
+
+.toast-icon {
+  margin-right: 15px;
+  font-size: 20px;
+}
+
+.priority-high .toast-icon {
+  color: #e74c3c;
+}
+
+.priority-medium .toast-icon {
+  color: #f39c12;
+}
+
+.priority-low .toast-icon {
+  color: #3498db;
+}
+
+.toast-text {
+  flex: 1;
+}
+
+.toast-text h4 {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+  color: var(--ff-text-dark, #2c2416);
+}
+
+.toast-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.toast-close {
+  background: transparent;
+  border: none;
+  color: #95a5a6;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0 5px;
+  align-self: flex-start;
+}
+
+.toast-close:hover {
+  color: #e74c3c;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+  .notification-panel {
+    width: 100%;
+    right: 0;
+    border-radius: 0;
+    max-height: 80vh;
+  }
+  
+  .notification-header {
+    padding: 12px 15px;
+  }
+  
+  .notification-item {
+    padding: 12px 15px;
+  }
+}
+
+/* Mobile Responsiveness for Notifications */
+@media (max-width: 480px) {
+  .notification-panel {
+    width: 100%;
+    max-width: 100%;
+    right: 0;
+    left: 0;
+    top: 60px;
+    border-radius: 0;
+    max-height: 90vh;
+  }
+  
+  .notification-list {
+    max-height: calc(90vh - 130px);
+  }
+}
+
+/* Animations for dismissing notifications */
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.notification-item.dismissing {
+  animation: slideOut 0.3s forwards;
+}
+
+/* Notification Footer */
+.notification-footer {
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+.view-all-button {
+  background: transparent;
+  border: none;
+  color: var(--ff-fresh-green, #4a7c59);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.view-all-button:hover {
+  background-color: #f0f7e6;
+}
+
+/* Notification Tabs */
+.notification-tabs {
+  display: flex;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 12px 15px;
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-button i {
+  font-size: 16px;
+}
+
+.tab-button:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.tab-button.active {
+  background-color: white;
+  color: var(--ff-fresh-green, #4a7c59);
+  font-weight: 600;
+  box-shadow: inset 0 -3px 0 var(--ff-fresh-green, #4a7c59);
+}
+
+/* Opportunities Container */
+.opportunities-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.opportunities-header {
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #eee;
+}
+
+.opportunities-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.opportunities-list {
+  overflow-y: auto;
+  max-height: calc(80vh - 180px);
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ff-fresh-green, #4a7c59) #f0f0f0;
+  overscroll-behavior: contain;
+}
+
+.opportunities-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.opportunities-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.opportunities-list::-webkit-scrollbar-thumb {
+  background-color: var(--ff-fresh-green, #4a7c59);
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
+}
+
+.opportunity-item {
+  padding: 18px 20px;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+  transition: background-color 0.2s ease;
+}
+
+.opportunity-item:hover {
+  background-color: #f9f5eb;
+}
+
+.opportunity-content {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.opportunity-icon {
+  background-color: var(--ff-secondary, #f9a825);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.opportunity-text {
+  flex-grow: 1;
+}
+
+.opportunity-title {
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0 0 8px 0;
+  color: #333;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+}
+
+.opportunity-description {
+  font-size: 15px;
+  color: #444;
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+
+.opportunity-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.opportunity-crop,
+.opportunity-quantity,
+.opportunity-price {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #f0f7e6;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #2e5d3b;
+  font-weight: 500;
+}
+
+.opportunity-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* No Opportunities Message */
+.no-opportunities {
+  padding: 30px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  font-size: 16px;
+}
+
+/* New Badge */
+.new-badge {
+  background-color: #ff5252;
+  color: white;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  margin-left: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Eligibility Badge */
+.eligibility-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+.eligibility-badge.eligible {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.eligibility-badge.potentially {
+  background-color: #fff8e1;
+  color: #f57f17;
+  border: 1px solid #ffe0b2;
+}
+
+.eligibility-badge.not-eligible {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+/* No Notifications */
+.no-notifications {
+  padding: 30px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  font-size: 16px;
+}
+
+/* All Schemes View */
+.all-schemes-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  max-height: calc(80vh - 130px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--ff-fresh-green, #4a7c59) #f0f0f0;
+}
+
+.all-schemes-view::-webkit-scrollbar {
+  width: 10px;
+}
+
+.all-schemes-view::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.all-schemes-view::-webkit-scrollbar-thumb {
+  background-color: var(--ff-fresh-green, #4a7c59);
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
+}
+
+.all-schemes-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+/* Scheme Type Groups */
+.scheme-type-group {
+  margin-bottom: 20px;
+  overflow: visible;
+}
+
+.scheme-type-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #f0f7e6;
+  border-bottom: 1px solid #c8e6c9;
+  position: sticky;
+  top: 51px; /* Height of the all-schemes-header */
+  z-index: 10;
+}
+
+.scheme-type-header i {
+  font-size: 18px;
+  color: var(--ff-fresh-green, #4a7c59);
+  margin-right: 10px;
+}
+
+.scheme-type-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2e5d3b;
+  flex-grow: 1;
+}
+
+.scheme-count {
+  background-color: var(--ff-fresh-green, #4a7c59);
+  color: white;
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Scheme Type Header Variations */
+.scheme-type-header.crop-insurance {
+  background-color: #d4edda;
+  border-bottom-color: #c3e6cb;
+}
+
+.scheme-type-header.subsidy {
+  background-color: #fff3cd;
+  border-bottom-color: #ffeeba;
+}
+
+.scheme-type-header.subsidy i {
+  color: #f57f17;
+}
+
+.scheme-type-header.loan {
+  background-color: #e1f5fe;
+  border-bottom-color: #b3e5fc;
+}
+
+.scheme-type-header.loan i {
+  color: #0277bd;
+}
+
+.scheme-type-header.grant {
+  background-color: #f8d7da;
+  border-bottom-color: #f5c6cb;
+}
+
+.scheme-type-header.grant i {
+  color: #c62828;
+}
+
+.scheme-list {
+  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.scheme-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scheme-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.scheme-list::-webkit-scrollbar-thumb {
+  background-color: var(--ff-fresh-green, #4a7c59);
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
+}

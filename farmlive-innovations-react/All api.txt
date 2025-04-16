@@ -1,0 +1,16 @@
+1.Microsoft translate api:
+3qWofMiQn4neoBAH2BpFl0BB9EeFCPQVHxZQIJI1AgqCqZoZTG74JQQJ99BDACGhslBXJ3w3AAAbACOGtB8X
+
+Endpoint : https://api.cognitive.microsofttranslator.com/
+
+
+2.Agricultural Land Holdings and Area As per 2015 16 Census
+579b464db66ec23bdd00000176a17aab2a604d97523d039e2f6c2911
+
+3.Google maps Api key - AIzaSyDsbifug6g9OqlmZE9z-fuNKTBGy4VOHFM
+
+4.Youtube api
+AIzaSyDsbifug6g9OqlmZE9z-fuNKTBGy4VOHFM
+
+5.Gemini APi
+AIzaSyByf0mNE-o2rg-ahkLwkcVDJU6H5PXyPrk
